@@ -18,41 +18,8 @@ const line2Services = [
 ];
 
 export default function ServicesMarquee() {
-  const marqueeRef = useRef(null);
-
-  useEffect(() => {
-    const marqueeContainer = marqueeRef.current;
-    if (!marqueeContainer) return;
-
-    const updateOpacity = () => {
-      const items = marqueeContainer.querySelectorAll('.marquee-text-item');
-      const containerRect = marqueeContainer.getBoundingClientRect();
-      const centerX = containerRect.left + containerRect.width / 2;
-
-      items.forEach((item) => {
-        const itemRect = item.getBoundingClientRect();
-        const itemCenterX = itemRect.left + itemRect.width / 2;
-        const distance = Math.abs(centerX - itemCenterX);
-        const maxDistance = containerRect.width / 2;
-        const normalizedDistance = Math.min(distance / maxDistance, 1);
-        const opacity = 1 - normalizedDistance * 0.45;
-        item.style.opacity = opacity.toString();
-      });
-    };
-
-    let animationFrameId;
-    const animationFrame = () => {
-      updateOpacity();
-      animationFrameId = requestAnimationFrame(animationFrame);
-    };
-
-    animationFrameId = requestAnimationFrame(animationFrame);
-
-    return () => cancelAnimationFrame(animationFrameId);
-  }, []);
-
   return (
-    <div ref={marqueeRef} className="hero-dual-marquee-wrapper">
+    <div className="hero-dual-marquee-wrapper">
       {/* LINE 1 - MOVING LEFT */}
       <div className="marquee-line-row">
         <div className="marquee-track-container left-container">
@@ -121,6 +88,8 @@ export default function ServicesMarquee() {
           border-bottom: 1px solid rgba(201, 168, 118, 0.3);
           background: rgba(244, 239, 230, 0.75);
           backdrop-filter: blur(10px);
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
           z-index: 10;
         }
 

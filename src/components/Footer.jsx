@@ -32,7 +32,7 @@ export default function Footer({ onOpenBooking, lang = 'en' }) {
           {/* Brand Column */}
           <div className="footer-brand-col">
             <div className="footer-logo" onClick={() => scrollToSection('home')}>
-              <img src={logoImg} alt="Smart Clinic" className="footer-logo-img" />
+              <img src={logoImg} alt="Smart Clinic" className="footer-logo-img" width="110" height="46" />
             </div>
             <p className="footer-tagline">
               {info.supportingTagline}
@@ -295,7 +295,7 @@ export default function Footer({ onOpenBooking, lang = 'en' }) {
           padding-top: 2.5rem;
           border-top: 1px solid rgba(255, 255, 255, 0.08);
           font-size: 0.8rem;
-          color: var(--text-dark-muted);
+          color: #D8D2C9;
         }
 
         .footer-meta-links {

@@ -314,12 +314,13 @@ export default function Technology({ setActivePage, onOpenBooking }) {
           background-color: var(--accent-gold);
           box-shadow: 0 0 8px var(--accent-gold);
           animation: scanMove 2.5s infinite linear;
+          will-change: transform;
         }
 
         @keyframes scanMove {
-          0% { top: 0; }
-          50% { top: 100%; }
-          100% { top: 0; }
+          0% { transform: translateY(0); }
+          50% { transform: translateY(220px); }
+          100% { transform: translateY(0); }
         }
 
         .metric-tag {

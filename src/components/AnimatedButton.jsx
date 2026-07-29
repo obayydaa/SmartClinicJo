@@ -97,7 +97,7 @@ export default function AnimatedButton({
           --shine-color: rgba(255, 255, 255, 0.95);
         }
 
-        /* Text Shine Animation */
+        /* Text Container */
         .btn-shine-text {
           position: relative;
           z-index: 10;
@@ -105,60 +105,50 @@ export default function AnimatedButton({
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
-          background: linear-gradient(
-            -75deg,
-            currentColor 0%,
-            currentColor 35%,
-            #FFFFFF 50%,
-            currentColor 65%,
-            currentColor 100%
-          );
-          background-size: 200% 100%;
-          -webkit-background-clip: text;
-          background-clip: text;
-          animation: textShineSweep 2.5s linear infinite;
+          color: inherit;
         }
 
-        @keyframes textShineSweep {
-          0% {
-            background-position: 200% 0;
-          }
-          100% {
-            background-position: -200% 0;
-          }
-        }
-
-        /* Border Shine Animation Layer */
+        /* Border Shine Animation Layer - GPU Accelerated */
         .btn-border-shine-layer {
           position: absolute;
           inset: 0;
           border-radius: 8px;
           padding: 1px;
           pointer-events: none;
+          overflow: hidden;
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+        }
+
+        .btn-border-shine-layer::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -50%;
+          width: 200%;
+          height: 100%;
           background: linear-gradient(
             -75deg,
             transparent 30%,
             var(--shine-color, rgba(201, 168, 118, 0.8)) 50%,
             transparent 70%
           );
-          background-size: 200% 100%;
-          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          -webkit-mask-composite: xor;
-          mask-composite: exclude;
           animation: borderShineSweep 2.5s linear infinite;
+          will-change: transform;
         }
 
         @keyframes borderShineSweep {
           0% {
-            background-position: 200% 0;
+            transform: translateX(-100%);
             opacity: 0.3;
           }
           50% {
             opacity: 1;
           }
           100% {
-            background-position: -200% 0;
+            transform: translateX(100%);
             opacity: 0.3;
           }
         }

@@ -95,7 +95,7 @@ export default function Navbar({ onOpenBooking, lang = 'en', toggleLang }) {
         <div className="container navbar-container">
           {/* Brand Logo Only (Clicking scrolls to Hero) */}
           <div className="navbar-logo" onClick={() => handleNavClick('home')} title="Return to Top">
-            <img src={logoImg} alt="Smart Clinic Logo" className="logo-img" />
+            <img src={logoImg} alt="Smart Clinic Logo" className="logo-img" width="110" height="46" />
           </div>
 
           {/* Desktop Nav */}
@@ -142,7 +142,7 @@ export default function Navbar({ onOpenBooking, lang = 'en', toggleLang }) {
       <div className={`mobile-drawer ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="mobile-drawer-header">
           <div className="navbar-logo" onClick={() => handleNavClick('home')}>
-            <img src={logoImg} alt="Smart Clinic" className="logo-img" />
+            <img src={logoImg} alt="Smart Clinic" className="logo-img" width="110" height="46" />
           </div>
           <button className="mobile-menu-toggle" onClick={() => setMobileMenuOpen(false)}>
             <X size={24} />

@@ -189,7 +189,7 @@ export default function Home({ onOpenBooking, lang = 'en' }) {
                   <CheckCircle2 size={22} />
                 </div>
                 <div>
-                  <h4 className="why-card-title">{item.title}</h4>
+                  <h3 className="why-card-title">{item.title}</h3>
                   <p className="why-card-desc">{item.description}</p>
                 </div>
               </div>
@@ -233,7 +233,7 @@ export default function Home({ onOpenBooking, lang = 'en' }) {
             <div className="compact-items-grid focus-grid">
               {currentCategoryObj.items.map((item, idx) => (
                 <div key={idx} className={`card-editorial compact-treatment-card reveal-on-scroll stagger-${(idx % 5) + 1}`}>
-                  <h4 className="treatment-item-name">{item.name}</h4>
+                  <h3 className="treatment-item-name">{item.name}</h3>
                   <p className="treatment-item-desc">{item.description}</p>
                   
                   <a
@@ -273,6 +273,8 @@ export default function Home({ onOpenBooking, lang = 'en' }) {
               <img
                 src={xerfImg}
                 alt="XERF Cynosure Monopolar RF Device"
+                width="240"
+                height="380"
                 loading="lazy"
                 decoding="async"
                 className="device-pop-out-img"
@@ -318,7 +320,7 @@ export default function Home({ onOpenBooking, lang = 'en' }) {
                   {activeWavelength === '6.78' ? (
                     <div className="wave-info-panel animate-fade-in">
                       <span className="wave-target-badge">{isAr ? 'تردد الطبقة السطحية والوسطى للبشرة' : 'EPIDERMAL & UPPER DERMAL FREQUENCY'}</span>
-                      <h4 className="wave-panel-title">{technologyInfo.xerf.specs[0].title}</h4>
+                      <h3 className="wave-panel-title">{technologyInfo.xerf.specs[0].title}</h3>
                       <p className="wave-panel-desc">
                         {technologyInfo.xerf.specs[0].detail}
                       </p>
@@ -326,7 +328,7 @@ export default function Home({ onOpenBooking, lang = 'en' }) {
                   ) : (
                     <div className="wave-info-panel animate-fade-in">
                       <span className="wave-target-badge gold-target">{isAr ? 'تردد الشد البنيوي لطبقة SMAS العميقة' : 'DEEP SMAS ANATOMICAL FREQUENCY'}</span>
-                      <h4 className="wave-panel-title">{technologyInfo.xerf.specs[1].title}</h4>
+                      <h3 className="wave-panel-title">{technologyInfo.xerf.specs[1].title}</h3>
                       <p className="wave-panel-desc">
                         {technologyInfo.xerf.specs[1].detail}
                       </p>
