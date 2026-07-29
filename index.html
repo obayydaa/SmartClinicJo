@@ -26,12 +26,14 @@
     <meta name="twitter:description" content="Combining medical expertise, artificial intelligence, and FDA-cleared XERF technology." />
     <meta name="twitter:image" content="/src/assets/SC_pics/SC logo enhanced png.webp" />
 
-    <!-- Preload Critical LCP Asset -->
+    <!-- Preload Critical LCP Assets -->
+    <link rel="preload" as="image" href="/src/assets/SC_pics/SC logo enhanced png.webp" type="image/webp" fetchpriority="high" />
     <link rel="preload" as="image" href="/src/assets/SC_pics/XERF_sa7-Photoroom.webp" type="image/webp" />
 
-    <!-- Optimized Google Fonts Loading (Non-blocking async pattern) -->
+    <!-- Optimized Google Fonts Loading (Non-blocking async pattern with preconnect & swap) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap">
