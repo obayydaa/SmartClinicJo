@@ -1,15 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CLINIC_INFO, BRAND_STORY, CLINIC_DIFFERENTIATORS, TREATMENTS_CATEGORIES, TECHNOLOGY_INFO, DOCTORS, FAQS } from '../data/clinicData';
+import { CLINIC_INFO_AR, BRAND_STORY_AR, CLINIC_DIFFERENTIATORS_AR, TREATMENTS_CATEGORIES_AR, TECHNOLOGY_INFO_AR, DOCTORS_AR, FAQS_AR } from '../data/clinicDataAR';
 import { ChevronDown, ArrowRight, Sparkles, Cpu, ShieldCheck, Plus, Minus, Phone, MessageCircle, MapPin, Clock, Award, CheckCircle2, Zap, Activity, Waves } from 'lucide-react';
 import DoctorProfileCard from '../components/DoctorProfileCard';
 import BackgroundPaths from '../components/BackgroundPaths';
 import FaqAccordion from '../components/FaqAccordion';
 import ServicesMarquee from '../components/ServicesMarquee';
 import AnimatedButton from '../components/AnimatedButton';
+import BeforeAfterSection from '../components/BeforeAfterSection';
+import { ShaderBackground } from '../components/ui/shaders-hero-section';
+import clinic1Img from '../assets/SC_pics/clinic/clinic 1.webp';
+import xerfImg from '../assets/SC_pics/XERF_sa7-Photoroom.webp';
 
-export default function Home({ onOpenBooking }) {
+export default function Home({ onOpenBooking, lang = 'en' }) {
+  const isAr = lang === 'ar';
+
+  const clinicInfo = isAr ? CLINIC_INFO_AR : CLINIC_INFO;
+  const brandStory = isAr ? BRAND_STORY_AR : BRAND_STORY;
+  const differentiators = isAr ? CLINIC_DIFFERENTIATORS_AR : CLINIC_DIFFERENTIATORS;
+  const treatmentsCategories = isAr ? TREATMENTS_CATEGORIES_AR : TREATMENTS_CATEGORIES;
+  const technologyInfo = isAr ? TECHNOLOGY_INFO_AR : TECHNOLOGY_INFO;
+  const doctors = isAr ? DOCTORS_AR : DOCTORS;
+  const faqs = isAr ? FAQS_AR : FAQS;
+
   // Treatments tab state
-  const [activeCategory, setActiveCategory] = useState(TREATMENTS_CATEGORIES[0].id);
+  const [activeCategory, setActiveCategory] = useState(treatmentsCategories[0].id);
+
+  // Synchronize category state on lang change
+  useEffect(() => {
+    setActiveCategory(treatmentsCategories[0].id);
+  }, [lang]);
 
   // XERF Dual Wavelength tab state
   const [activeWavelength, setActiveWavelength] = useState('6.78');
@@ -17,7 +37,33 @@ export default function Home({ onOpenBooking }) {
   // FAQ accordion state
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
 
-  const currentCategoryObj = TREATMENTS_CATEGORIES.find(cat => cat.id === activeCategory) || TREATMENTS_CATEGORIES[0];
+  const currentCategoryObj = treatmentsCategories.find(cat => cat.id === activeCategory) || treatmentsCategories[0];
+
+  // Auto Scroll Reveal IntersectionObserver Setup
+  useEffect(() => {
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal-visible');
+        }
+      });
+    };
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -50px 0px',
+      threshold: 0.15,
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const elementsToObserve = document.querySelectorAll('.reveal-on-scroll, .reveal-scale');
+
+    elementsToObserve.forEach((el) => observer.observe(el));
+
+    return () => {
+      elementsToObserve.forEach((el) => observer.unobserve(el));
+    };
+  }, [activeCategory]);
 
   const scrollToNext = (targetId) => {
     const el = document.getElementById(targetId);
@@ -40,33 +86,39 @@ export default function Home({ onOpenBooking }) {
       <section id="home" className="screen-section hero-screen relative-section">
         <BackgroundPaths density="light" variant="topography" opacity={0.7} />
         
-        {/* Full-width Golden Rectangle Block (Border to Border) */}
+        {/* Full-width Golden Rectangle Block (Border to Border) with Shader Animation */}
         <div className="hero-golden-block relative-section">
-          <BackgroundPaths density="dense" variant="topography" opacity={0.65} />
-          <div className="container hero-container text-center relative-z">
-            <div className="hero-content mx-auto">
-              <span className="eyebrow eyebrow-on-gold animate-fade-in">JORDAN'S PREMIER AI-POWERED INSTITUTE</span>
-              <h1 className="hero-title hero-title-on-gold title-large animate-fade-in">
-                The Future of <br />
-                <em className="hero-serif-italic-on-gold">Intelligent Aesthetics.</em>
-              </h1>
-              <p className="hero-subtitle hero-subtitle-on-gold animate-fade-in">
-                {CLINIC_INFO.supportingTagline}
-              </p>
-              <div className="hero-actions animate-fade-in">
-                <AnimatedButton variant="primary" onClick={onOpenBooking}>
-                  Book Consultation
-                </AnimatedButton>
-                <AnimatedButton variant="secondary" onClick={() => scrollToNext('treatments')}>
-                  Explore Protocols
-                </AnimatedButton>
+          <ShaderBackground className="hero-shader-container">
+            <BackgroundPaths density="dense" variant="topography" opacity={0.45} />
+            <div className="container hero-container text-center relative-z">
+              <div className="hero-content mx-auto">
+                <span className="eyebrow eyebrow-on-gold animate-fade-in">
+                  {isAr ? 'المعهد الطبي الأول للتجميل الذكي في الأردن' : "JORDAN'S PREMIER AI-POWERED INSTITUTE"}
+                </span>
+                <h1 className="hero-title hero-title-on-gold title-large animate-fade-in">
+                  {isAr ? 'مستقبل التجميل' : 'The Future of'} <br />
+                  <em className="hero-serif-italic-on-gold">
+                    {isAr ? 'الذكي والمتطور.' : 'Intelligent Aesthetics.'}
+                  </em>
+                </h1>
+                <p className="hero-subtitle hero-subtitle-on-gold animate-fade-in">
+                  {clinicInfo.supportingTagline}
+                </p>
+                <div className="hero-actions animate-fade-in">
+                  <AnimatedButton variant="primary" onClick={onOpenBooking}>
+                    {isAr ? 'حجز استشارة' : 'Book Consultation'}
+                  </AnimatedButton>
+                  <AnimatedButton variant="secondary" onClick={() => scrollToNext('treatments')}>
+                    {isAr ? 'استكشاف الخدمات' : 'Explore Services'}
+                  </AnimatedButton>
+                </div>
               </div>
             </div>
-          </div>
+          </ShaderBackground>
         </div>
 
         <div className="hero-scroll-cue" onClick={() => scrollToNext('about')}>
-          <span className="scroll-text">DISCOVER THE INSTITUTE</span>
+          <span className="scroll-text">{isAr ? 'اكتشف المعهد' : 'DISCOVER THE INSTITUTE'}</span>
           <ChevronDown size={18} className="scroll-chevron" />
         </div>
       </section>
@@ -76,31 +128,42 @@ export default function Home({ onOpenBooking }) {
       ========================================== */}
       <section id="about" className="screen-section about-screen section-padding-compact relative-section">
         <BackgroundPaths density="light" variant="minimal" opacity={0.5} />
-        <div className="container relative-z">
+        <div className="container relative-z reveal-on-scroll">
           <div className="about-compact-grid">
-            <div className="about-compact-text">
-              <span className="eyebrow">OUR PHILOSOPHY</span>
-              <h2 className="title-medium">Medicine, AI & Refined Elegance</h2>
+            <div className="about-compact-text reveal-on-scroll stagger-1">
+              <span className="eyebrow">{isAr ? 'فلسفتنا الطبية' : 'OUR PHILOSOPHY'}</span>
+              <h2 className="title-medium">{isAr ? 'الطب، الذكاء الاصطناعي والأناقة المتقنة' : 'Medicine, AI & Refined Elegance'}</h2>
               <p className="compact-lead-text">
-                Located in Abdoun, Amman, Smart Clinic is a private boutique institute combining empirical AI facial diagnostics with non-surgical aesthetic medicine and clinical dermatology.
+                {brandStory.vision}
               </p>
               <p className="compact-body-text">
-                We believe in natural enhancement tailored to your biological profile — utilizing original certified products and advanced multi-layer injection protocols.
+                {brandStory.mission}
               </p>
               <div className="mantra-line-inline">
-                <span>Core Philosophy:</span> <em>"{BRAND_STORY.whyName.slice(0, 110)}..."</em>
+                <span>{isAr ? 'فلسفتنا الأساسية:' : 'Core Philosophy:'}</span> <em>"{brandStory.whyName}"</em>
               </div>
             </div>
 
-            <div className="about-compact-image">
+            <div className="about-compact-image reveal-scale stagger-2">
               <div className="compact-img-frame">
                 <img
-                  src="/SC_pics/clinic/clinic 1.jpeg"
+                  src={clinic1Img}
                   alt="Smart Clinic Interior in Abdoun"
+                  loading="lazy"
+                  decoding="async"
                   className="compact-about-img"
                 />
-                <div className="img-badge-overlay">
-                  <span>ABDOUN, AMMAN</span>
+                
+                {/* Floating Glassmorphism Badge 1 (Top Left) */}
+                <div className="glass-badge-floating glass-badge-top-left">
+                  <MapPin size={13} className="text-gold" />
+                  <span>{isAr ? 'عمان، عبدون • الطابق الأول' : 'ABDOUN, AMMAN • 1ST FLOOR'}</span>
+                </div>
+
+                {/* Floating Glassmorphism Badge 2 (Bottom Right) */}
+                <div className="glass-badge-floating glass-badge-bottom-right">
+                  <Sparkles size={13} className="text-gold" />
+                  <span>{isAr ? 'أول جهاز XERF في الأردن' : "JORDAN'S 1ST XERF & AI CENTER"}</span>
                 </div>
               </div>
             </div>
@@ -114,14 +177,14 @@ export default function Home({ onOpenBooking }) {
       <section id="why-us" className="screen-section why-us-screen section-padding-compact bg-secondary relative-section">
         <BackgroundPaths density="medium" variant="topography" opacity={0.6} />
         <div className="container relative-z">
-          <div className="section-header-compact text-center">
-            <span className="eyebrow">THE SMART DIFFERENCE</span>
-            <h2 className="title-medium">Why Discerning Patients Choose Us</h2>
+          <div className="section-header-compact text-center reveal-on-scroll">
+            <span className="eyebrow">{isAr ? 'تميزنا الطبي' : 'THE SMART DIFFERENCE'}</span>
+            <h2 className="title-medium">{isAr ? 'لماذا يختارنا المراجعون' : 'Why Discerning Patients Choose Us'}</h2>
           </div>
 
           <div className="why-us-grid focus-grid">
-            {CLINIC_DIFFERENTIATORS.map((item) => (
-              <div key={item.id} className="why-card">
+            {differentiators.map((item, idx) => (
+              <div key={item.id} className={`why-card reveal-on-scroll stagger-${(idx % 5) + 1}`}>
                 <div className="why-card-icon">
                   <CheckCircle2 size={22} />
                 </div>
@@ -141,14 +204,14 @@ export default function Home({ onOpenBooking }) {
       <section id="treatments" className="screen-section treatments-screen section-padding-compact relative-section">
         <BackgroundPaths density="light" variant="minimal" opacity={0.5} />
         <div className="container relative-z">
-          <div className="section-header-compact text-center">
-            <span className="eyebrow">CURATED PROTOCOLS</span>
-            <h2 className="title-medium">What We Offer</h2>
+          <div className="section-header-compact text-center reveal-on-scroll">
+            <span className="eyebrow">{isAr ? 'خدماتنا المختارة' : 'CURATED SERVICES'}</span>
+            <h2 className="title-medium">{isAr ? 'خدماتنا وعلاجاتنا' : 'What We Offer'}</h2>
           </div>
 
           {/* Luxury 3D Push Filter Tabs */}
-          <div className="treatments-tabs-row">
-            {TREATMENTS_CATEGORIES.map((cat) => (
+          <div className="treatments-tabs-row reveal-on-scroll stagger-1">
+            {treatmentsCategories.map((cat) => (
               <button
                 key={cat.id}
                 className={`btn-uiverse-3d ${activeCategory === cat.id ? 'active' : ''}`}
@@ -162,16 +225,32 @@ export default function Home({ onOpenBooking }) {
           </div>
 
           {/* Active Category Display */}
-          <div className="treatments-active-panel">
+          <div className="treatments-active-panel reveal-on-scroll stagger-2">
             <div className="panel-header">
               <span className="panel-subtitle">{currentCategoryObj.subtitle}</span>
             </div>
 
             <div className="compact-items-grid focus-grid">
               {currentCategoryObj.items.map((item, idx) => (
-                <div key={idx} className="card-editorial compact-treatment-card">
+                <div key={idx} className={`card-editorial compact-treatment-card reveal-on-scroll stagger-${(idx % 5) + 1}`}>
                   <h4 className="treatment-item-name">{item.name}</h4>
                   <p className="treatment-item-desc">{item.description}</p>
+                  
+                  <a
+                    href={`https://wa.me/962778881113?text=${encodeURIComponent(
+                      isAr 
+                        ? `مرحباً سمارت كلينك، أرغب في معرفة تفاصيل أكثر عن ${item.name}` 
+                        : `Hello Smart Clinic, I would like more details about ${item.name}.`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="treatment-wa-link"
+                    title={isAr ? `استفسر عن ${item.name} عبر الواتساب` : `Inquire about ${item.name} on WhatsApp`}
+                  >
+                    <MessageCircle size={15} className="wa-icon" />
+                    <span>{isAr ? 'استفسر عبر الواتساب' : 'Inquire on WhatsApp'}</span>
+                    <ArrowRight size={13} className="arrow-icon" style={{ transform: isAr ? 'rotate(180deg)' : 'none' }} />
+                  </a>
                 </div>
               ))}
             </div>
@@ -187,33 +266,35 @@ export default function Home({ onOpenBooking }) {
         <div className="container">
           
           {/* Black to Gold Horizontal Gradient Bar */}
-          <div className="xerf-gradient-bar">
+          <div className="xerf-gradient-bar reveal-scale">
             
             {/* Device Column on Left with Top Overlapping Out */}
-            <div className="xerf-overlapping-device">
+            <div className="xerf-overlapping-device reveal-scale stagger-1">
               <img
-                src="/SC_pics/XERF-Photoroom.png"
+                src={xerfImg}
                 alt="XERF Cynosure Monopolar RF Device"
+                loading="lazy"
+                decoding="async"
                 className="device-pop-out-img"
               />
               <div className="exclusive-gold-tag">
                 <Sparkles size={13} />
-                <span>JORDAN'S 1ST & ONLY DEVICE</span>
+                <span>{isAr ? 'أول جهاز في الأردن حصرياً' : "JORDAN'S 1ST & ONLY DEVICE"}</span>
               </div>
             </div>
 
             {/* Information & Wavelength Details on Right */}
-            <div className="xerf-bar-content">
+            <div className="xerf-bar-content reveal-on-scroll stagger-2">
               <div className="jordan-exclusive-badge">
-                <span>CROWN JEWEL DEVICE • FDA-CLEARED</span>
+                <span>{isAr ? 'درة أجهزة التجميل • معتمد من FDA' : 'CROWN JEWEL DEVICE • FDA-CLEARED'}</span>
               </div>
 
               <h2 className="title-large xerf-bar-title">
-                What is XERF?
+                {isAr ? 'ما هو جهاز XERF؟' : 'What is XERF?'}
               </h2>
 
               <p className="xerf-bar-lead">
-                XERF by Cynosure Lutronic is the world's first dual-frequency monopolar RF system — bringing non-surgical SMAS layer structural lifting to Jordan, exclusively at Smart Clinic Abdoun.
+                {technologyInfo.xerf.description}
               </p>
 
               {/* Interactive Wavelength Visualizer */}
@@ -223,31 +304,31 @@ export default function Home({ onOpenBooking }) {
                     className={`wave-tab-btn ${activeWavelength === '6.78' ? 'active' : ''}`}
                     onClick={() => setActiveWavelength('6.78')}
                   >
-                    <Waves size={15} /> 6.78 MHz Surface Layer
+                    <Waves size={15} /> {isAr ? 'تردد 6.78 MHz للنضارة السطحية' : '6.78 MHz Surface Layer'}
                   </button>
                   <button
                     className={`wave-tab-btn ${activeWavelength === '2.0' ? 'active' : ''}`}
                     onClick={() => setActiveWavelength('2.0')}
                   >
-                    <Zap size={15} /> 2.0 MHz Deep SMAS Layer
+                    <Zap size={15} /> {isAr ? 'تردد 2.0 MHz لشد SMAS العميق' : '2.0 MHz Deep SMAS Layer'}
                   </button>
                 </div>
 
                 <div className="bar-wave-display">
                   {activeWavelength === '6.78' ? (
                     <div className="wave-info-panel animate-fade-in">
-                      <span className="wave-target-badge">EPIDERMAL & UPPER DERMAL FREQUENCY</span>
-                      <h4 className="wave-panel-title">Surface Micro-Texture & Fine Lines</h4>
+                      <span className="wave-target-badge">{isAr ? 'تردد الطبقة السطحية والوسطى للبشرة' : 'EPIDERMAL & UPPER DERMAL FREQUENCY'}</span>
+                      <h4 className="wave-panel-title">{technologyInfo.xerf.specs[0].title}</h4>
                       <p className="wave-panel-desc">
-                        Refines surface pores, tightens upper dermal micro-texture, and restores youthful radiance.
+                        {technologyInfo.xerf.specs[0].detail}
                       </p>
                     </div>
                   ) : (
                     <div className="wave-info-panel animate-fade-in">
-                      <span className="wave-target-badge gold-target">DEEP SMAS ANATOMICAL FREQUENCY</span>
-                      <h4 className="wave-panel-title">Deep Structural SMAS Lifting</h4>
+                      <span className="wave-target-badge gold-target">{isAr ? 'تردد الشد البنيوي لطبقة SMAS العميقة' : 'DEEP SMAS ANATOMICAL FREQUENCY'}</span>
+                      <h4 className="wave-panel-title">{technologyInfo.xerf.specs[1].title}</h4>
                       <p className="wave-panel-desc">
-                        Reaches deep SMAS layer tissue to induce structural collagen contraction and true non-surgical facial lifting.
+                        {technologyInfo.xerf.specs[1].detail}
                       </p>
                     </div>
                   )}
@@ -258,26 +339,26 @@ export default function Home({ onOpenBooking }) {
               <div className="bar-specs-row">
                 <div className="bar-spec-item">
                   <ShieldCheck size={16} className="spec-icon" />
-                  <span>FDA-Cleared Cynosure Monopolar</span>
+                  <span>{isAr ? 'اعتماد FDA الأمريكي' : 'FDA-Cleared Cynosure Monopolar'}</span>
                 </div>
                 <div className="bar-spec-item">
                   <Zap size={16} className="spec-icon" />
-                  <span>Never-Numb™ Sapphire Cooling</span>
+                  <span>{isAr ? 'تبريد Never-Numb™ المتطور' : 'Never-Numb™ Sapphire Cooling'}</span>
                 </div>
                 <div className="bar-spec-item">
                   <Activity size={16} className="spec-icon" />
-                  <span>Wave Fit™ Real-Time Control</span>
+                  <span>{isAr ? 'تحكم Wave Fit™ الذكي' : 'Wave Fit™ Real-Time Control'}</span>
                 </div>
                 <div className="bar-spec-item">
                   <Cpu size={16} className="spec-icon" />
-                  <span>AI Diagnostic Calibration</span>
+                  <span>{isAr ? 'معايرة الذكاء الاصطناعي' : 'AI Diagnostic Calibration'}</span>
                 </div>
               </div>
 
               {/* Action Button */}
               <div className="bar-cta-row">
                 <button className="btn-primary btn-gold" onClick={onOpenBooking}>
-                  Book Jordan's Exclusive XERF Consultation
+                  {isAr ? 'حجز جلسة XERF الحصرية' : "Book Jordan's Exclusive XERF Consultation"}
                 </button>
               </div>
 
@@ -288,37 +369,42 @@ export default function Home({ onOpenBooking }) {
       </section>
 
       {/* ==========================================
+          5.5 BEFORE & AFTER TRANSFORMATIONS SHOWCASE
+      ========================================== */}
+      <BeforeAfterSection isAr={isAr} onOpenBooking={onOpenBooking} />
+
+      {/* ==========================================
           6. DOCTORS PROFILES (Split-Screen Showcase)
       ========================================== */}
       <section id="doctors" className="screen-section doctors-screen section-padding-compact relative-section">
         <BackgroundPaths opacity={0.5} />
         <div className="container relative-z">
-          <div className="section-header-compact text-center">
-            <span className="eyebrow">CLINICAL LEADERSHIP</span>
-            <h2 className="title-medium">Guided by Medical Doctors</h2>
+          <div className="section-header-compact text-center reveal-on-scroll">
+            <span className="eyebrow">{isAr ? 'الإدارة والقيادة الطبية' : 'CLINICAL LEADERSHIP'}</span>
+            <h2 className="title-medium">{isAr ? 'أطباؤنا المؤسسون' : 'Guided by Medical Doctors'}</h2>
           </div>
 
           <div className="doctors-split-screen-stack">
             {/* Top Half: Dr. Shroq (Pic Left, Bio Right) */}
-            {DOCTORS[0] && (
-              <div className="split-stage stage-shroq-top">
-                <DoctorProfileCard doc={DOCTORS[0]} onOpenBooking={onOpenBooking} />
+            {doctors[0] && (
+              <div className="split-stage stage-shroq-top reveal-on-scroll stagger-1">
+                <DoctorProfileCard doc={doctors[0]} onOpenBooking={onOpenBooking} lang={lang} />
               </div>
             )}
 
             {/* Elegant Luxury Split Divider */}
-            <div className="doctors-split-divider">
+            <div className="doctors-split-divider reveal-on-scroll stagger-2">
               <div className="split-line" />
               <div className="split-badge-pill">
-                <span>SMART CLINIC ABDOUN • CO-FOUNDERS</span>
+                <span>{isAr ? 'سمارت كلينك عبدون • الأطباء المؤسسون' : 'SMART CLINIC ABDOUN • CO-FOUNDERS'}</span>
               </div>
               <div className="split-line" />
             </div>
 
             {/* Bottom Half: Dr. Oways (Bio Left, Pic Right) */}
-            {DOCTORS[1] && (
-              <div className="split-stage stage-oways-bottom">
-                <DoctorProfileCard doc={DOCTORS[1]} onOpenBooking={onOpenBooking} />
+            {doctors[1] && (
+              <div className="split-stage stage-oways-bottom reveal-on-scroll stagger-3">
+                <DoctorProfileCard doc={doctors[1]} onOpenBooking={onOpenBooking} lang={lang} />
               </div>
             )}
           </div>
@@ -330,13 +416,13 @@ export default function Home({ onOpenBooking }) {
       ========================================== */}
       <section id="faq" className="screen-section faq-screen section-padding-compact bg-secondary relative-section">
         <BackgroundPaths density="light" variant="minimal" opacity={0.55} />
-        <div className="container relative-z">
+        <div className="container relative-z reveal-on-scroll">
           <div className="section-header-compact text-center">
-            <span className="eyebrow">PATIENT GUIDANCE</span>
-            <h2 className="title-medium">Frequently Asked Questions</h2>
+            <span className="eyebrow">{isAr ? 'إرشادات المراجعين' : 'PATIENT GUIDANCE'}</span>
+            <h2 className="title-medium">{isAr ? 'الأسئلة الشائعة والإجابات' : 'Frequently Asked Questions'}</h2>
           </div>
 
-          <FaqAccordion />
+          <FaqAccordion lang={lang} />
         </div>
       </section>
 
@@ -348,18 +434,18 @@ export default function Home({ onOpenBooking }) {
         <div className="container relative-z">
           <div className="contact-compact-layout">
             <div className="cta-box-compact">
-              <span className="eyebrow eyebrow-light">START YOUR JOURNEY</span>
-              <h2 className="title-medium text-white">Experience Intelligent Aesthetics</h2>
+              <span className="eyebrow eyebrow-light">{isAr ? 'ابدأ رحلتك العلاجية' : 'START YOUR JOURNEY'}</span>
+              <h2 className="title-medium text-white">{isAr ? 'تجربة التجميل الذكي والمتطور' : 'Experience Intelligent Aesthetics'}</h2>
               <p className="text-muted-light">
-                Abdoun, Amman — Salman Al-Qudah Street, Building 9, 1st Floor (Opposite Zest Restaurant)
+                {clinicInfo.address}
               </p>
 
               <div className="direct-cta-row">
-                <a href={CLINIC_INFO.whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-primary btn-gold">
-                  <MessageCircle size={18} /> Message on WhatsApp
+                <a href={clinicInfo.whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-primary btn-gold">
+                  <MessageCircle size={18} /> {isAr ? 'مراسلة عبر الواتساب' : 'Message on WhatsApp'}
                 </a>
-                <a href={CLINIC_INFO.phoneUrl} className="btn-secondary btn-hero-secondary">
-                  <Phone size={18} /> Call {CLINIC_INFO.phone}
+                <a href={clinicInfo.phoneUrl} className="btn-secondary btn-hero-secondary">
+                  <Phone size={18} /> {isAr ? `اتصل بنا: ${clinicInfo.phone}` : `Call ${clinicInfo.phone}`}
                 </a>
               </div>
             </div>
@@ -399,9 +485,9 @@ export default function Home({ onOpenBooking }) {
           right: 50%;
           margin-left: -50vw;
           margin-right: -50vw;
-          background: linear-gradient(135deg, rgba(181, 138, 73, 0.82) 0%, rgba(168, 130, 75, 0.82) 50%, rgba(140, 103, 52, 0.82) 100%);
+          background: transparent;
           backdrop-filter: blur(8px);
-          padding: 3.75rem 1.5rem;
+          padding: 0;
           margin-top: auto;
           margin-bottom: auto;
           transform: translateY(-35px);
@@ -413,26 +499,29 @@ export default function Home({ onOpenBooking }) {
         }
 
         .eyebrow-on-gold {
-          color: rgba(255, 255, 255, 0.95) !important;
+          color: #2B2723 !important;
           letter-spacing: 0.16em;
+          font-weight: 700;
         }
 
         .hero-title-on-gold {
-          color: #FFFFFF !important;
+          color: #100E0C !important;
           margin-bottom: 1.25rem;
-          font-weight: 600;
+          font-weight: 700;
           text-align: center;
+          text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
         }
 
         .hero-serif-italic-on-gold {
           font-style: italic;
-          color: #FFF3DB !important;
-          font-weight: 500;
+          color: #5C431A !important;
+          font-weight: 600;
         }
 
         .hero-subtitle-on-gold {
           font-size: 1.1rem;
-          color: rgba(255, 255, 255, 0.92) !important;
+          color: #1E1B18 !important;
+          font-weight: 500;
           line-height: 1.75;
           margin: 0 auto 2.25rem;
           max-width: 680px;
@@ -650,6 +739,44 @@ export default function Home({ onOpenBooking }) {
           margin-bottom: 1.25rem;
         }
 
+        .treatment-wa-link {
+          margin-top: auto;
+          padding-top: 0.85rem;
+          border-top: 1px solid var(--border-subtle, #EFE8DD);
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.75rem;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          color: var(--text-primary);
+          text-decoration: none;
+          transition: all 0.25s var(--ease-editorial);
+        }
+
+        .treatment-wa-link .wa-icon {
+          color: #25D366;
+          transition: transform 0.25s ease;
+        }
+
+        .treatment-wa-link .arrow-icon {
+          transition: transform 0.25s ease;
+          color: var(--accent-gold-dark);
+        }
+
+        .treatment-wa-link:hover {
+          color: var(--accent-gold-dark);
+          gap: 0.75rem;
+        }
+
+        .treatment-wa-link:hover .wa-icon {
+          transform: scale(1.15);
+        }
+
+        .treatment-wa-link:hover .arrow-icon {
+          transform: translateX(4px);
+        }
+
         /* ===================================================
            XERF HORIZONTAL GRADIENT BAR WITH DEVICE OVERLAP
         =================================================== */
@@ -664,12 +791,12 @@ export default function Home({ onOpenBooking }) {
           border: 1px solid var(--accent-gold-dark);
           box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
           display: grid;
-          grid-template-columns: 340px 1fr;
+          grid-template-columns: 280px 1fr;
           gap: 3.5rem;
           padding: 3.5rem 3rem 3.5rem 2rem;
           position: relative;
           color: #FFFFFF;
-          margin-top: 50px; /* Space for overlapping device top */
+          margin-top: 60px; /* Space for overlapping device top */
         }
 
         /* Overlapping device column on left */
@@ -684,10 +811,10 @@ export default function Home({ onOpenBooking }) {
 
         .device-pop-out-img {
           width: 100%;
-          max-width: 320px;
+          max-width: 240px;
           height: auto;
           object-fit: contain;
-          filter: drop-shadow(0 24px 30px rgba(0, 0, 0, 0.7));
+          filter: drop-shadow(0 24px 35px rgba(0, 0, 0, 0.75));
           transition: transform 0.4s var(--ease-editorial);
         }
 
@@ -976,7 +1103,7 @@ export default function Home({ onOpenBooking }) {
             margin-top: -80px;
           }
           .device-pop-out-img {
-            max-width: 240px;
+            max-width: 200px;
           }
         }
 

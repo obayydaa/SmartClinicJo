@@ -455,3 +455,592 @@ button {
 .btn-uiverse-3d:focus:not(:focus-visible) {
   outline: none;
 }
+
+/* ===================================================
+   UX-SAFE SCROLL ANIMATIONS & REVEAL SYSTEM
+=================================================== */
+
+/* Base hidden state for scroll reveal elements */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  will-change: opacity, transform;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Revealed state when scrolled into viewport */
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* GPU Hardware Acceleration for Animated Components */
+.card-editorial,
+.why-card,
+.compact-treatment-card,
+.doctor-executive-card,
+.doc-interactive-frame {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Stagger delay utilities */
+.stagger-1 { transition-delay: 0.08s; }
+.stagger-2 { transition-delay: 0.16s; }
+.stagger-3 { transition-delay: 0.24s; }
+.stagger-4 { transition-delay: 0.32s; }
+.stagger-5 { transition-delay: 0.40s; }
+
+/* Scale-in variant for badges & devices */
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.94) translateY(16px);
+  will-change: opacity, transform;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-scale.reveal-visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Accessibility: Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll,
+  .reveal-scale {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ===================================================
+   MOBILE / PHONE VIEW OPTIMIZATIONS (<768px & <480px)
+=================================================== */
+
+@media (max-width: 768px) {
+  /* Prevent horizontal overflow on mobile */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  /* Compact section padding for mobile screens */
+  .section-padding-compact {
+    padding: 60px 0 !important;
+  }
+
+  /* Hero section golden block scaling on mobile */
+  .hero-golden-block {
+    padding: 0 !important;
+    transform: translateY(-15px) !important;
+    box-shadow: 0 10px 30px rgba(168, 130, 75, 0.2) !important;
+  }
+
+  .shader-content-padding {
+    padding: 2.25rem 1.25rem !important;
+  }
+
+  .eyebrow-on-gold {
+    font-size: 0.68rem !important;
+    letter-spacing: 0.12em !important;
+    margin-bottom: 0.65rem !important;
+  }
+
+  .hero-title-on-gold {
+    font-size: 2.35rem !important;
+    line-height: 1.15 !important;
+    font-weight: 800 !important;
+    margin-bottom: 0.85rem !important;
+  }
+
+  .hero-serif-italic-on-gold {
+    font-weight: 700 !important;
+  }
+
+  .hero-subtitle-on-gold {
+    font-size: 0.88rem !important;
+    line-height: 1.55 !important;
+    margin-bottom: 1.5rem !important;
+    max-width: 100% !important;
+  }
+
+  .hero-actions {
+    flex-direction: column !important;
+    width: 100%;
+    gap: 0.75rem !important;
+  }
+
+  .hero-actions button {
+    width: 100% !important;
+  }
+
+  /* About grid stack on mobile */
+  .about-compact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  .compact-img-frame {
+    height: 260px !important;
+  }
+
+  /* Why Us cards grid stack on mobile */
+  .why-us-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .why-card {
+    padding: 1.25rem !important;
+  }
+
+  /* Treatments category grid stack on mobile */
+  .compact-items-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  /* XERF showcase bar responsive layout for phones */
+  .xerf-gradient-bar {
+    grid-template-columns: 1fr !important;
+    padding: 2rem 1.25rem !important;
+    gap: 2rem !important;
+    margin-top: 30px !important;
+  }
+
+  .xerf-overlapping-device {
+    margin-top: -60px !important;
+  }
+
+  .device-pop-out-img {
+    max-width: 180px !important;
+  }
+
+  .xerf-bar-title {
+    font-size: 2.2rem !important;
+  }
+
+  .bar-specs-row {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  .bar-cta-row button {
+    width: 100% !important;
+  }
+
+  /* Doctors cards mobile adjustments */
+  .doctors-split-screen-stack {
+    gap: 2rem !important;
+  }
+
+  /* Contact CTA mobile layout */
+  .direct-cta-row {
+    flex-direction: column !important;
+    width: 100%;
+    gap: 0.75rem !important;
+  }
+
+  .direct-cta-row a {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .shader-content-padding {
+    padding: 2rem 1rem !important;
+  }
+
+  .hero-title-on-gold {
+    font-size: 2.15rem !important;
+    line-height: 1.16 !important;
+    font-weight: 800 !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .hero-serif-italic-on-gold {
+    font-weight: 700 !important;
+  }
+
+  .eyebrow-on-gold {
+    font-size: 0.65rem !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  .hero-subtitle-on-gold {
+    font-size: 0.84rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .bar-specs-row {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ===================================================
+   ARABIC (RTL) TYPOGRAPHY & LAYOUT STYLING
+=================================================== */
+html[dir="rtl"],
+[dir="rtl"] body {
+  font-family: 'Tajawal', 'Cairo', sans-serif !important;
+}
+
+[dir="rtl"] .hero-title-on-gold,
+[dir="rtl"] .title-medium,
+[dir="rtl"] .title-large,
+[dir="rtl"] .wave-panel-title,
+[dir="rtl"] .treatment-item-name,
+[dir="rtl"] .why-card-title,
+[dir="rtl"] .portrait-doctor-name {
+  font-family: 'Cairo', 'Tajawal', sans-serif !important;
+}
+
+[dir="rtl"] .hero-serif-italic-on-gold {
+  font-style: normal !important;
+  font-weight: 800 !important;
+}
+
+[dir="rtl"] .eyebrow {
+  letter-spacing: 0.05em !important;
+}
+
+/* ===================================================
+   BEFORE & AFTER SHOWCASE SECTION STYLES
+=================================================== */
+.before-after-screen {
+  background: transparent;
+  position: relative;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  min-height: auto !important;
+}
+
+.ba-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1240px;
+  width: 100%;
+  margin: 2rem auto 0 auto;
+}
+
+.ba-comparison-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  background: rgba(18, 15, 13, 0.9);
+  border: 1px solid rgba(168, 134, 84, 0.3);
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+  transition: transform 0.35s var(--ease-editorial), border-color 0.35s ease, box-shadow 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ba-comparison-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-gold);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), 0 0 20px rgba(168, 134, 84, 0.15);
+}
+
+.ba-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: #0D0B0A;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(168, 134, 84, 0.18);
+}
+
+.ba-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.ba-badge {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.2rem 0.55rem;
+  border-radius: 3px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  z-index: 2;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.ba-badge-before {
+  background: rgba(12, 10, 8, 0.85);
+  color: #D1D5DB;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(4px);
+}
+
+.ba-badge-after {
+  background: rgba(12, 10, 8, 0.85);
+  color: var(--accent-gold-light);
+  border: 1px solid var(--accent-gold);
+  backdrop-filter: blur(4px);
+}
+
+.ba-clickable {
+  cursor: pointer;
+}
+
+.ba-zoom-hint {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgba(12, 10, 8, 0.75);
+  color: var(--accent-gold-light);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border: 1px solid rgba(168, 134, 84, 0.3);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.ba-comparison-card:hover .ba-zoom-hint {
+  opacity: 1;
+}
+
+/* Lightbox Modal Overlay */
+.ba-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: rgba(8, 6, 5, 0.94);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: baFadeIn 0.25s var(--ease-editorial);
+}
+
+.ba-modal-container {
+  position: relative;
+  max-width: 1040px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ba-modal-close-btn {
+  position: absolute;
+  top: -3.25rem;
+  right: 0;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  z-index: 10;
+}
+
+.ba-modal-close-btn:hover {
+  background: var(--accent-gold);
+  color: #100E0C;
+  transform: scale(1.08);
+}
+
+.ba-modal-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  width: 100%;
+  max-height: 80vh;
+}
+
+.ba-modal-img-box {
+  position: relative;
+  width: 100%;
+  max-height: 75vh;
+  aspect-ratio: 4 / 5;
+  background: #0A0806;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(168, 134, 84, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+}
+
+.ba-modal-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #0A0806;
+  display: block;
+}
+
+.ba-badge-modal {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.8rem;
+  bottom: 0.75rem;
+}
+
+@keyframes baFadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 1100px) {
+  .ba-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .before-after-screen {
+    padding-top: 35px;
+    padding-bottom: 35px;
+  }
+  .ba-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    max-width: 480px;
+  }
+  .ba-comparison-card {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+  .ba-badge {
+    font-size: 0.6rem;
+    padding: 0.15rem 0.45rem;
+    bottom: 0.35rem;
+  }
+  .ba-modal-pair {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+  .ba-modal-img-box {
+    max-height: 40vh;
+  }
+  .ba-modal-close-btn {
+    top: -2.75rem;
+    right: 0;
+    width: 34px;
+    height: 34px;
+  }
+}
+
+/* Glassmorphism Floating Feature Badges for Clinic Image */
+.compact-img-frame {
+  position: relative;
+  overflow: visible !important;
+  border-radius: 8px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18), 0 0 35px rgba(201, 168, 118, 0.15);
+}
+
+.compact-about-img {
+  border-radius: 8px;
+  border: 1px solid var(--border-gold);
+  transition: transform 0.4s var(--ease-editorial), box-shadow 0.4s ease;
+  display: block;
+  width: 100%;
+}
+
+.compact-img-frame:hover .compact-about-img {
+  transform: scale(1.02);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+}
+
+.glass-badge-floating {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  background: rgba(30, 27, 24, 0.88);
+  border: 1px solid var(--accent-gold);
+  border-radius: 4px;
+  color: var(--accent-gold-light);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  z-index: 5;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  white-space: nowrap;
+}
+
+.glass-badge-floating:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5);
+}
+
+.glass-badge-top-left {
+  top: -14px;
+  left: -14px;
+}
+
+.glass-badge-bottom-right {
+  bottom: -14px;
+  right: -14px;
+}
+
+[dir="rtl"] .glass-badge-top-left {
+  left: auto;
+  right: -14px;
+}
+
+[dir="rtl"] .glass-badge-bottom-right {
+  right: auto;
+  left: -14px;
+}
+
+@media (max-width: 640px) {
+  .glass-badge-floating {
+    font-size: 0.625rem;
+    padding: 0.35rem 0.65rem;
+  }
+  .glass-badge-top-left {
+    top: -10px;
+    left: -8px;
+  }
+  .glass-badge-bottom-right {
+    bottom: -10px;
+    right: -8px;
+  }
+  [dir="rtl"] .glass-badge-top-left {
+    right: -8px;
+  }
+  [dir="rtl"] .glass-badge-bottom-right {
+    left: -8px;
+  }
+}

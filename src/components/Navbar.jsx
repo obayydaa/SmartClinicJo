@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { CLINIC_INFO } from '../data/clinicData';
-import { Menu, X, MessageCircle } from 'lucide-react';
+import { CLINIC_INFO_AR } from '../data/clinicDataAR';
+import { Menu, X, MessageCircle, Globe } from 'lucide-react';
+import logoImg from '../assets/SC_pics/SC logo enhanced png.webp';
 
-export default function Navbar({ onOpenBooking }) {
+export default function Navbar({ onOpenBooking, lang = 'en', toggleLang }) {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  const isAr = lang === 'ar';
+  const info = isAr ? CLINIC_INFO_AR : CLINIC_INFO;
+
   useEffect(() => {
-    const handleScroll = () => {
+    let ticking = false;
+
+    const updateScrollState = () => {
       setScrolled(window.scrollY > 40);
 
       const sections = ['home', 'about', 'why-us', 'treatments', 'xerf', 'doctors', 'faq', 'contact'];
@@ -25,13 +32,32 @@ export default function Navbar({ onOpenBooking }) {
           }
         }
       }
+      ticking = false;
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScrollState);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateScrollState();
+
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navItems = [
+  const navItems = isAr ? [
+    { id: 'home', label: 'الرئيسية' },
+    { id: 'about', label: 'عن العيادة' },
+    { id: 'why-us', label: 'لماذا نحن' },
+    { id: 'treatments', label: 'خدماتنا' },
+    { id: 'xerf', label: 'تقنية XERF' },
+    { id: 'doctors', label: 'الأطباء' },
+    { id: 'faq', label: 'الأسئلة الشائعة' },
+    { id: 'contact', label: 'تواصل معنا' },
+  ] : [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
     { id: 'why-us', label: 'Why Us' },
@@ -69,7 +95,7 @@ export default function Navbar({ onOpenBooking }) {
         <div className="container navbar-container">
           {/* Brand Logo Only (Clicking scrolls to Hero) */}
           <div className="navbar-logo" onClick={() => handleNavClick('home')} title="Return to Top">
-            <img src="/SC_pics/SC logo enhanced png.png" alt="Smart Clinic Logo" className="logo-img" />
+            <img src={logoImg} alt="Smart Clinic Logo" className="logo-img" />
           </div>
 
           {/* Desktop Nav */}
@@ -87,8 +113,18 @@ export default function Navbar({ onOpenBooking }) {
 
           {/* Actions */}
           <div className="navbar-actions">
+            {/* Language Switcher Pill */}
+            <button
+              onClick={toggleLang}
+              className="lang-toggle-btn"
+              title={isAr ? "Switch to English" : "التحويل إلى العربية"}
+            >
+              <Globe size={15} />
+              <span>{isAr ? "EN" : "العربية"}</span>
+            </button>
+
             <button className="btn-primary btn-nav-cta" onClick={onOpenBooking}>
-              <span>Book Consultation</span>
+              <span>{isAr ? 'حجز استشارة' : 'Book Consultation'}</span>
             </button>
 
             <button
@@ -106,7 +142,7 @@ export default function Navbar({ onOpenBooking }) {
       <div className={`mobile-drawer ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="mobile-drawer-header">
           <div className="navbar-logo" onClick={() => handleNavClick('home')}>
-            <img src="/SC_pics/SC logo enhanced png.png" alt="Smart Clinic" className="logo-img" />
+            <img src={logoImg} alt="Smart Clinic" className="logo-img" />
           </div>
           <button className="mobile-menu-toggle" onClick={() => setMobileMenuOpen(false)}>
             <X size={24} />
@@ -125,9 +161,18 @@ export default function Navbar({ onOpenBooking }) {
           ))}
 
           <div className="mobile-drawer-cta">
+            <button
+              onClick={() => { toggleLang(); setMobileMenuOpen(false); }}
+              className="lang-toggle-btn w-full mb-3 justify-center"
+              style={{ padding: '0.65rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', width: '100%', marginBottom: '0.75rem' }}
+            >
+              <Globe size={16} />
+              <span>{isAr ? "English" : "اللغة العربية"}</span>
+            </button>
+
             <button className="btn-primary w-full" onClick={() => { setMobileMenuOpen(false); onOpenBooking(); }}>
               <MessageCircle size={18} />
-              <span>Book Consultation</span>
+              <span>{isAr ? 'حجز استشارة' : 'Book Consultation'}</span>
             </button>
           </div>
         </div>
@@ -162,6 +207,31 @@ export default function Navbar({ onOpenBooking }) {
           display: flex;
           align-items: center;
           justify-content: space-between;
+        }
+
+        .lang-toggle-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          padding: 0.45rem 0.85rem;
+          border-radius: 20px;
+          border: 1px solid var(--border-gold, rgba(181, 138, 73, 0.4));
+          background: rgba(255, 255, 255, 0.75);
+          color: #100E0C;
+          font-size: 0.82rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          backdrop-filter: blur(8px);
+          position: relative;
+          z-index: 20;
+        }
+
+        .lang-toggle-btn:hover {
+          background: #FAF7F2;
+          border-color: #B58A49;
+          transform: translateY(-1px);
+          box-shadow: 0 2px 8px rgba(181, 138, 73, 0.2);
         }
 
         .navbar-logo {

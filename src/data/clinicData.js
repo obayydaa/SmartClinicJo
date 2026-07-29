@@ -59,7 +59,7 @@ export const CLINIC_DIFFERENTIATORS = [
 export const TREATMENTS_CATEGORIES = [
   {
     id: "aesthetics",
-    title: "Non-Surgical Aesthetics",
+    title: "Facial Enhancements",
     subtitle: "Precision facial contouring and expression refinement.",
     items: [
       {
@@ -78,7 +78,7 @@ export const TREATMENTS_CATEGORIES = [
   },
   {
     id: "skin-quality",
-    title: "Skin Quality & Regeneration",
+    title: "Skin Glow & Rejuvenation",
     subtitle: "Cellular rejuvenation, deep hydration, and collagen restoration.",
     items: [
       {
@@ -109,7 +109,7 @@ export const TREATMENTS_CATEGORIES = [
   },
   {
     id: "advanced-techniques",
-    title: "Advanced Signature Techniques",
+    title: "Smart Clinic Techniques",
     subtitle: "Proprietary multi-layer injection methodologies.",
     items: [
       {
@@ -124,7 +124,7 @@ export const TREATMENTS_CATEGORIES = [
   },
   {
     id: "dermatology",
-    title: "Medical Dermatology & Hair Restoration",
+    title: "Skin Health & Hair Care",
     subtitle: "Clinical solutions for specialized skin and scalp conditions.",
     items: [
       {
@@ -143,7 +143,7 @@ export const TREATMENTS_CATEGORIES = [
   },
   {
     id: "body",
-    title: "Body Contouring & Localized Refinement",
+    title: "Body Sculpting & Fat Reduction",
     subtitle: "Non-surgical targeted fat reduction.",
     items: [
       {
@@ -154,7 +154,7 @@ export const TREATMENTS_CATEGORIES = [
   },
   {
     id: "xerf-flagship",
-    title: "XERF Flagship Skin Tightening",
+    title: "XERF Skin Lifting & Tightening",
     subtitle: "Jordan's first dual-frequency monopolar radiofrequency system.",
     items: [
       {
@@ -207,7 +207,7 @@ export const DOCTORS = [
     id: "dr-shroq-alhusaini",
     name: "Dr. Shroq Alhusaini",
     title: "Co-Founder & Aesthetic Doctor",
-    image: "/SC_pics/shroq/(shosho) 4.jpeg",
+    image: new URL('../assets/SC_pics/shroq/(shosho) 4.webp', import.meta.url).href,
     imagePosition: "left",
     badge: "EXECUTIVE LEADERSHIP",
     headline: "Empirical Science. Refined Aesthetics.",
@@ -239,17 +239,18 @@ export const DOCTORS = [
     id: "dr-oways-alrawashdeh",
     name: "Dr. Oways Alrawashdeh",
     title: "Co-Founder & Aesthetic Doctor",
-    image: "/SC_pics/clinic/clinic 1.jpeg",
+    image: new URL('../assets/SC_pics/Oways/Oways1.webp', import.meta.url).href,
     imagePosition: "right",
     badge: "EXECUTIVE LEADERSHIP",
     headline: "Diagnostic Precision. Holistic Care.",
     quote: "True aesthetic success begins with treating the skin, restoring its health, and revealing its beauty through data-driven AI diagnostics.",
-    bio: "General Practitioner and Non-Surgical Aesthetic Doctor specializing in clinical dermatology management, AI diagnostic integration, and holistic aesthetic treatment planning. Dr. Oways co-founded Smart Clinic with the vision of elevating Jordanian aesthetic care by fusing advanced artificial intelligence with safe, patient-tailored medical practices.",
+    bio: "Dr. Oways Alrawashdeh (M.B.B.S.) is a physician, dermatologist, and healthcare entrepreneur dedicated to integrated, patient-centered clinical care. Graduating with a Bachelor of Medicine & Surgery from Badji Mokhtar University (2006–2014), he served 5 years in public emergency & critical care medicine before completing advanced postgraduate training in Dermatology, Master's studies, and the Egyptian Fellowship in Cairo. In 2018, Dr. Oways founded Aman Medical Group and co-founded Smart Clinic to elevate aesthetic healthcare through AI diagnostics and evidence-based medicine.",
     credentials: [
-      "General Practitioner & Non-Surgical Aesthetic Doctor",
-      "Clinical Dermatology & AI Diagnostic Specialist",
-      "Member, General Medical Association",
-      "Co-Founder, Smart Clinic Abdoun"
+      "Bachelor of Medicine & Surgery (M.B.B.S.) — Badji Mokhtar University (2006–2014)",
+      "5 Years Ministry of Health Service — Emergency & Critical Care",
+      "Postgraduate Dermatology Training & Egyptian Fellowship (Cairo)",
+      "Founder & Medical Director — Aman Medical Group (Est. 2018)",
+      "Co-Founder & Aesthetic Lead — Smart Clinic Abdoun"
     ],
     specialties: "AI facial diagnostic evaluation, clinical dermatology management, skin barrier repair, and non-surgical aesthetic planning.",
     instagram: "@oways_alrawashdeh",

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TREATMENTS_CATEGORIES } from '../data/clinicData';
-import { ArrowRight, Sparkles, Shield, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Sparkles, Shield, CheckCircle2, MessageCircle } from 'lucide-react';
 
 export default function Treatments({ setActivePage, onOpenBooking }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -16,7 +16,7 @@ export default function Treatments({ setActivePage, onOpenBooking }) {
         <div className="container">
           <span className="eyebrow">CURATED CLINICAL MENU</span>
           <h1 className="title-large max-w-editorial">
-            Personalized Aesthetic & Dermatology Protocols
+            Personalized Aesthetic & Dermatology Services
           </h1>
           <p className="lead-paragraph">
             Every procedure at Smart Clinic is customized following AI diagnostic scanning. We prioritize skin health, natural harmony, and certified original products.
@@ -30,7 +30,7 @@ export default function Treatments({ setActivePage, onOpenBooking }) {
             >
               <span className="btn-shadow"></span>
               <span className="btn-edge"></span>
-              <span className="btn-front">All Protocols</span>
+              <span className="btn-front">All Services</span>
             </button>
             {TREATMENTS_CATEGORIES.map(cat => (
               <button
@@ -54,7 +54,7 @@ export default function Treatments({ setActivePage, onOpenBooking }) {
             {filteredCategories.map(cat => (
               <div key={cat.id} className="category-block">
                 <div className="category-block-header">
-                  <span className="eyebrow">PROTOCOL CATEGORY</span>
+                  <span className="eyebrow">SERVICE CATEGORY</span>
                   <h2 className="title-medium">{cat.title}</h2>
                   <p className="cat-subtitle-lead">{cat.subtitle}</p>
                 </div>
@@ -72,6 +72,18 @@ export default function Treatments({ setActivePage, onOpenBooking }) {
                         )}
                       </div>
                       <p className="item-description">{item.description}</p>
+                      
+                      <a
+                        href={`https://wa.me/962778881113?text=${encodeURIComponent(`Hello Smart Clinic, I would like more details about ${item.name}.`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="treatment-wa-link"
+                        title={`Inquire about ${item.name} on WhatsApp`}
+                      >
+                        <MessageCircle size={15} className="wa-icon" />
+                        <span>Inquire on WhatsApp</span>
+                        <ArrowRight size={13} className="arrow-icon" />
+                      </a>
                     </div>
                   ))}
                 </div>
@@ -102,7 +114,7 @@ export default function Treatments({ setActivePage, onOpenBooking }) {
       {/* CTA Footer */}
       <section className="closing-cta-section section-padding bg-secondary">
         <div className="container text-center">
-          <h2 className="title-medium">Not Sure Which Protocol Suits You?</h2>
+          <h2 className="title-medium">Not Sure Which Service Suits You?</h2>
           <p className="closing-subtext">
             Start with an AI Facial Diagnostics scan in Abdoun to receive a biological analysis and custom treatment roadmap.
           </p>

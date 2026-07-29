@@ -1,8 +1,13 @@
 import React from 'react';
 import { CLINIC_INFO } from '../data/clinicData';
+import { CLINIC_INFO_AR } from '../data/clinicDataAR';
 import { Instagram, MapPin, Phone, Clock, ArrowUpRight } from 'lucide-react';
+import logoImg from '../assets/SC_pics/SC logo enhanced png.webp';
 
-export default function Footer({ onOpenBooking }) {
+export default function Footer({ onOpenBooking, lang = 'en' }) {
+  const isAr = lang === 'ar';
+  const info = isAr ? CLINIC_INFO_AR : CLINIC_INFO;
+
   const scrollToSection = (sectionId) => {
     if (sectionId === 'home') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -27,14 +32,13 @@ export default function Footer({ onOpenBooking }) {
           {/* Brand Column */}
           <div className="footer-brand-col">
             <div className="footer-logo" onClick={() => scrollToSection('home')}>
-              <img src="/SC_pics/SC logo enhanced png.png" alt="Smart Clinic" className="footer-logo-img" />
-              <span className="footer-brand-name">SMART CLINIC</span>
+              <img src={logoImg} alt="Smart Clinic" className="footer-logo-img" />
             </div>
             <p className="footer-tagline">
-              {CLINIC_INFO.supportingTagline}
+              {info.supportingTagline}
             </p>
             <div className="footer-mantra">
-              <span>Philosophy:</span> <em>"{CLINIC_INFO.mantra}"</em>
+              <span>{isAr ? 'فلسفتنا:' : 'Philosophy:'}</span> <em>"{info.mantra}"</em>
             </div>
           </div>
 
@@ -80,7 +84,7 @@ export default function Footer({ onOpenBooking }) {
             </div>
           </div>
 
-          {/* Socials & Booking Column */}
+          {/* Socials Column */}
           <div className="footer-social-col">
             <h4 className="footer-heading">Digital Connect</h4>
             <div className="social-links-list">
@@ -112,10 +116,6 @@ export default function Footer({ onOpenBooking }) {
                 <span>Dr. Oways: {CLINIC_INFO.socials.drOways}</span>
               </a>
             </div>
-
-            <button className="btn-primary footer-cta-btn" onClick={onOpenBooking}>
-              Book Consultation
-            </button>
           </div>
         </div>
 

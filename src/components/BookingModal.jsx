@@ -1,9 +1,33 @@
 import React from 'react';
 import { CLINIC_INFO } from '../data/clinicData';
+import { CLINIC_INFO_AR } from '../data/clinicDataAR';
 import { MessageCircle, Phone, X, Sparkles, Clock, MapPin } from 'lucide-react';
 
-export default function BookingModal({ isOpen, onClose }) {
+export default function BookingModal({ isOpen, onClose, lang = 'en' }) {
+  React.useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
+
+  const isAr = lang === 'ar';
+  const info = isAr ? CLINIC_INFO_AR : CLINIC_INFO;
 
   return (
     <div className="booking-modal-overlay" onClick={onClose}>
@@ -13,17 +37,19 @@ export default function BookingModal({ isOpen, onClose }) {
         </button>
 
         <div className="modal-header">
-          <span className="eyebrow">PERSONALIZED CONSULTATION</span>
-          <h3 className="modal-title">Begin Your Aesthetic Journey</h3>
+          <span className="eyebrow">{isAr ? 'حجز استشارة خاصة' : 'PERSONALIZED CONSULTATION'}</span>
+          <h3 className="modal-title">{isAr ? 'ابدأ رحلتك العلاجية مع أطبائنا' : 'Begin Your Aesthetic Journey'}</h3>
           <p className="modal-subtitle">
-            At Smart Clinic, every consultation is designed around your unique biological profile. Choose your preferred path to connect directly with our boutique clinical team in Abdoun.
+            {isAr
+              ? 'في سمارت كلينك، نضع خطة علاجية مخصصة لملامحك وبشرتك. تواصل مباشرة مع فريقنا الطبي في عيادتنا في عبدون.'
+              : 'At Smart Clinic, every consultation is designed around your unique biological profile. Choose your preferred path to connect directly with our boutique clinical team in Abdoun.'}
           </p>
         </div>
 
         <div className="booking-options">
           {/* WhatsApp Option */}
           <a
-            href={CLINIC_INFO.whatsappUrl}
+            href={info.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="booking-card whatsapp-card"
@@ -32,22 +58,22 @@ export default function BookingModal({ isOpen, onClose }) {
               <MessageCircle size={24} />
             </div>
             <div className="booking-card-info">
-              <span className="booking-card-title">Message Us on WhatsApp</span>
-              <span className="booking-card-sub">Instant response & personalized scheduling</span>
+              <span className="booking-card-title">{isAr ? 'احجز عبر الواتساب فوراً' : 'Message Us on WhatsApp'}</span>
+              <span className="booking-card-sub">{isAr ? 'رد فوري وتنسيق الموعد المناسب لك' : 'Instant response & personalized scheduling'}</span>
             </div>
-            <span className="booking-card-arrow">→</span>
+            <span className="booking-card-arrow">{isAr ? '←' : '→'}</span>
           </a>
 
           {/* Phone Call Option */}
-          <a href={CLINIC_INFO.phoneUrl} className="booking-card phone-card">
+          <a href={info.phoneUrl} className="booking-card phone-card">
             <div className="booking-card-icon">
               <Phone size={24} />
             </div>
             <div className="booking-card-info">
-              <span className="booking-card-title">Call the Clinic Directly</span>
-              <span className="booking-card-sub">{CLINIC_INFO.phone}</span>
+              <span className="booking-card-title">{isAr ? 'اتصل بالعيادة مباشرة' : 'Call the Clinic Directly'}</span>
+              <span className="booking-card-sub">{info.phone}</span>
             </div>
-            <span className="booking-card-arrow">→</span>
+            <span className="booking-card-arrow">{isAr ? '←' : '→'}</span>
           </a>
         </div>
 

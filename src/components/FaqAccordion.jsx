@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Search, ChevronDown, X } from 'lucide-react';
 import { FAQS } from '../data/clinicData';
+import { FAQS_AR } from '../data/clinicDataAR';
 
-export default function FaqAccordion() {
+export default function FaqAccordion({ lang = 'en' }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [openIndex, setOpenIndex] = useState(0); // First item open by default
 
-  const filteredFaqs = FAQS.filter(faq =>
+  const isAr = lang === 'ar';
+  const faqs = isAr ? FAQS_AR : FAQS;
+
+  const filteredFaqs = faqs.filter(faq =>
     faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
     faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -22,7 +26,7 @@ export default function FaqAccordion() {
         <Search size={18} className="faq-search-icon" />
         <input
           type="text"
-          placeholder="Search FAQs..."
+          placeholder={isAr ? "ابحث في الأسئلة الشائعة..." : "Search FAQs..."}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="faq-search-input"

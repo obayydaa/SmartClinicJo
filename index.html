@@ -2,15 +2,65 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/SC_pics/SC logo enhanced png.png" />
+    <link rel="icon" type="image/webp" href="/src/assets/SC_pics/SC logo enhanced png.webp" />
+    <link rel="apple-touch-icon" href="/src/assets/SC_pics/SC logo enhanced png.webp" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#100E0C" />
+
+    <!-- SEO Meta Tags -->
     <title>Smart Clinic | The Future of Intelligent Aesthetics</title>
-    <meta name="description" content="Jordan's premier AI-powered luxury aesthetic institute in Abdoun, Amman. Combining medical expertise, artificial intelligence, and world-class technology." />
-    
-    <!-- Google Fonts: Cormorant Garamond (Editorial Serif) & Plus Jakarta Sans (Clean Sans-Serif) -->
+    <meta name="description" content="Jordan's premier AI-powered luxury aesthetic institute in Abdoun, Amman. Combining medical expertise, artificial intelligence, and FDA-cleared XERF dual-wavelength technology." />
+    <meta name="keywords" content="Smart Clinic, XERF Jordan, AI skin analysis Amman, aesthetic clinic Abdoun, Dr Shroq Al-Husaini, Dr Oways Al-Rawashdeh, Botox Jordan, Profhilo Amman" />
+    <meta name="author" content="Smart Clinic" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://smartclinic.jo/" />
+    <meta property="og:title" content="Smart Clinic | Intelligent Aesthetics in Abdoun, Amman" />
+    <meta property="og:description" content="Combining medical expertise, artificial intelligence, and FDA-cleared XERF technology for personalized aesthetic care." />
+    <meta property="og:image" content="/src/assets/SC_pics/SC logo enhanced png.webp" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Smart Clinic | Intelligent Aesthetics in Abdoun, Amman" />
+    <meta name="twitter:description" content="Combining medical expertise, artificial intelligence, and FDA-cleared XERF technology." />
+    <meta name="twitter:image" content="/src/assets/SC_pics/SC logo enhanced png.webp" />
+
+    <!-- Preload Critical LCP Asset -->
+    <link rel="preload" as="image" href="/src/assets/SC_pics/XERF_sa7-Photoroom.webp" type="image/webp" />
+
+    <!-- Optimized Google Fonts Loading (Non-blocking async pattern) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap">
+    </noscript>
+
+    <!-- Structured Data (JSON-LD) for Local Business & Medical Clinic -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalClinic",
+      "name": "Smart Clinic",
+      "image": "/src/assets/SC_pics/SC logo enhanced png.webp",
+      "telephone": "+962778881113",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Salman Al-Qudah Street, Building 9, 1st Floor",
+        "addressLocality": "Abdoun, Amman",
+        "addressCountry": "JO"
+      },
+      "url": "https://smartclinic.jo/",
+      "priceRange": "$$$",
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+        "opens": "10:00",
+        "closes": "18:00"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

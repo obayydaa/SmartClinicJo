@@ -8,7 +8,18 @@ export default defineConfig({
     port: 3000,
     open: true,
     watch: {
-      ignored: ['**/SC_pics/**', '**/.git/**']
+      ignored: ['**/.git/**']
+    }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-icons': ['lucide-react'],
+          'vendor-animation': ['framer-motion', '@paper-design/shaders-react']
+        }
+      }
     }
   }
 })

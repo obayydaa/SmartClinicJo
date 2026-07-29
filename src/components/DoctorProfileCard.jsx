@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { Instagram, Linkedin, Mail, MessageCircle, ArrowRight, CheckCircle2 } from 'lucide-react';
 
-export default function DoctorProfileCard({ doc, onOpenBooking }) {
+export default function DoctorProfileCard({ doc, onOpenBooking, lang = 'en' }) {
+  const isAr = lang === 'ar';
   const imageFrameRef = useRef(null);
   const [transformStyle, setTransformStyle] = useState({});
   const [glareStyle, setGlareStyle] = useState({ opacity: 0 });
@@ -59,13 +60,15 @@ export default function DoctorProfileCard({ doc, onOpenBooking }) {
           <img
             src={doc.image}
             alt={doc.name}
+            loading="lazy"
+            decoding="async"
             className="doc-normal-portrait"
           />
           <div className="doc-glare-effect" style={glareStyle} />
           
           {/* Overlay Tag at bottom left of picture */}
           <div className="doc-portrait-overlay-tag">
-            <span className="portrait-role-badge">CO-FOUNDER • SMART CLINIC</span>
+            <span className="portrait-role-badge">{isAr ? 'المؤسس المشارك • سمارت كلينك' : 'CO-FOUNDER • SMART CLINIC'}</span>
             <h3 className="portrait-doctor-name">{doc.name}</h3>
           </div>
         </div>
@@ -100,7 +103,7 @@ export default function DoctorProfileCard({ doc, onOpenBooking }) {
         {doc.credentials && (
           <div className="doc-credentials-summary">
             <ul className="doc-creds-inline-list">
-              {doc.credentials.slice(0, 3).map((cred, idx) => (
+              {doc.credentials.slice(0, 4).map((cred, idx) => (
                 <li key={idx}>
                   <CheckCircle2 size={14} className="cred-check-icon" />
                   <span>{cred}</span>
@@ -110,65 +113,28 @@ export default function DoctorProfileCard({ doc, onOpenBooking }) {
           </div>
         )}
 
-        {/* Bottom Row: Social Icons + Action Link */}
+        {/* Bottom Row: Prominent Instagram Button */}
         <div className="doc-bottom-actions-row">
-          <div className="doc-socials-row">
-            {doc.socialLinks?.instagram && (
-              <a
-                href={doc.socialLinks.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="doc-social-btn"
-                title="Instagram"
-              >
-                <Instagram size={16} />
-              </a>
-            )}
-            {doc.socialLinks?.linkedin && (
-              <a
-                href={doc.socialLinks.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="doc-social-btn"
-                title="LinkedIn"
-              >
-                <Linkedin size={16} />
-              </a>
-            )}
-            {doc.socialLinks?.email && (
-              <a
-                href={doc.socialLinks.email}
-                className="doc-social-btn"
-                title="Email"
-              >
-                <Mail size={16} />
-              </a>
-            )}
-            {doc.socialLinks?.whatsapp && (
-              <a
-                href={doc.socialLinks.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="doc-social-btn"
-                title="WhatsApp"
-              >
-                <MessageCircle size={16} />
-              </a>
-            )}
-          </div>
-
-          <button className="doc-read-story-btn" onClick={onOpenBooking}>
-            <span>BOOK CONSULTATION WITH {doc.name.split(' ')[1]?.toUpperCase() || doc.name.toUpperCase()}</span>
-            <ArrowRight size={15} className="arrow-icon" />
-          </button>
+          {doc.socialLinks?.instagram && (
+            <a
+              href={doc.socialLinks.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="doc-instagram-pill-btn"
+              title={`Visit ${doc.name} on Instagram`}
+            >
+              <Instagram size={17} className="ig-icon" />
+              <span className="ig-handle-text">{doc.instagram || `@${doc.name.toLowerCase().replace(/\s+/g, '')}`}</span>
+            </a>
+          )}
         </div>
       </div>
 
       <style>{`
         .doctor-executive-card {
           display: grid;
-          grid-template-columns: 360px 1fr;
-          gap: 3rem;
+          grid-template-columns: 380px 1fr;
+          gap: 2.5rem;
           align-items: center;
           background-color: var(--bg-card, #FFFFFF);
           border: 1px solid var(--border-gold, rgba(201, 168, 118, 0.3));
@@ -184,7 +150,7 @@ export default function DoctorProfileCard({ doc, onOpenBooking }) {
         }
 
         .layout-image-right {
-          grid-template-columns: 1fr 360px;
+          grid-template-columns: 1fr 380px;
         }
 
         .layout-image-right .doc-portrait-wrapper {
@@ -204,7 +170,7 @@ export default function DoctorProfileCard({ doc, onOpenBooking }) {
         .doc-interactive-frame {
           position: relative;
           width: 100%;
-          height: 380px;
+          aspect-ratio: 4 / 5;
           border-radius: 14px;
           overflow: hidden;
           box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
@@ -359,32 +325,39 @@ export default function DoctorProfileCard({ doc, onOpenBooking }) {
           border-top: 1px solid var(--border-subtle, #EFE8DD);
         }
 
-        .doc-socials-row {
-          display: flex;
+        .doc-instagram-pill-btn {
+          display: inline-flex;
           align-items: center;
           gap: 0.5rem;
-        }
-
-        .doc-social-btn {
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
+          padding: 0.45rem 0.95rem;
+          border-radius: 20px;
           border: 1px solid var(--border-gold, rgba(201, 168, 118, 0.4));
-          background-color: var(--bg-primary, #FFFFFF);
+          background-color: var(--bg-secondary, #FAF7F2);
           color: var(--text-primary, #1E1B18);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.2s var(--ease-editorial, cubic-bezier(0.25, 1, 0.5, 1));
+          font-family: var(--font-sans, sans-serif);
+          font-size: 0.78rem;
+          font-weight: 600;
+          letter-spacing: 0.04em;
           text-decoration: none;
+          transition: all 0.25s var(--ease-editorial, cubic-bezier(0.25, 1, 0.5, 1));
         }
 
-        .doc-social-btn:hover {
+        .doc-instagram-pill-btn .ig-icon {
+          color: var(--accent-gold-dark, #A8824B);
+          transition: transform 0.25s ease, color 0.25s ease;
+        }
+
+        .doc-instagram-pill-btn:hover {
           background-color: var(--text-primary, #1E1B18);
-          color: var(--accent-gold-light, #E6CA9C);
+          color: #FFFFFF;
           border-color: var(--text-primary, #1E1B18);
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .doc-instagram-pill-btn:hover .ig-icon {
+          color: #E6CA9C;
+          transform: scale(1.1);
         }
 
         .doc-read-story-btn {
@@ -429,7 +402,8 @@ export default function DoctorProfileCard({ doc, onOpenBooking }) {
             order: 2;
           }
           .doc-interactive-frame {
-            height: 320px;
+            height: 380px;
+            min-height: 340px;
           }
           .doc-main-headline {
             font-size: 1.5rem;

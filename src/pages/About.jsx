@@ -1,6 +1,7 @@
 import React from 'react';
 import { BRAND_STORY, CLINIC_INFO, CLINIC_DIFFERENTIATORS } from '../data/clinicData';
 import { ArrowRight, Award, ShieldCheck, Heart, Sparkles, CheckCircle2 } from 'lucide-react';
+import clinic1Img from '../assets/SC_pics/clinic/clinic 1.webp';
 
 export default function About({ setActivePage, onOpenBooking }) {
   return (
@@ -57,8 +58,10 @@ export default function About({ setActivePage, onOpenBooking }) {
             </div>
             <div className="why-name-image-wrapper">
               <img
-                src="/SC_pics/clinic/clinic 1.jpeg"
+                src={clinic1Img}
                 alt="Smart Clinic Sanctuary in Abdoun"
+                loading="lazy"
+                decoding="async"
                 className="why-name-img"
               />
             </div>
