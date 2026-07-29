@@ -68,14 +68,14 @@ export default function BeforeAfterSection({ isAr = false }) {
               
               {/* Left Photo (Before) */}
               <div className="ba-image-wrapper">
-                <img src={item.beforeImg} alt={`Before ${item.id}`} className="ba-img" />
+                <img src={item.beforeImg} alt={`Before ${item.id}`} className="ba-img" width="280" height="280" loading="lazy" decoding="async" />
                 <span className="ba-badge ba-badge-before">{isAr ? 'قبل' : 'Before'}</span>
                 <span className="ba-zoom-hint"><ZoomIn size={14} /></span>
               </div>
 
               {/* Right Photo (After) */}
               <div className="ba-image-wrapper">
-                <img src={item.afterImg} alt={`After ${item.id}`} className="ba-img" />
+                <img src={item.afterImg} alt={`After ${item.id}`} className="ba-img" width="280" height="280" loading="lazy" decoding="async" />
                 <span className="ba-badge ba-badge-after">{isAr ? 'بعد' : 'After'}</span>
                 <span className="ba-zoom-hint"><ZoomIn size={14} /></span>
               </div>

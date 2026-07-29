@@ -44,7 +44,7 @@ export default function Footer({ onOpenBooking, lang = 'en' }) {
 
           {/* Quick Links Column */}
           <div className="footer-links-col">
-            <h4 className="footer-heading">Navigation</h4>
+            <h3 className="footer-heading">Navigation</h3>
             <ul className="footer-links-list">
               <li><button onClick={() => scrollToSection('home')}>Home</button></li>
               <li><button onClick={() => scrollToSection('about')}>About Philosophy</button></li>
@@ -59,7 +59,7 @@ export default function Footer({ onOpenBooking, lang = 'en' }) {
 
           {/* Location & Hours Column */}
           <div className="footer-contact-col">
-            <h4 className="footer-heading">Institute Location</h4>
+            <h3 className="footer-heading">Institute Location</h3>
             <p className="footer-address">
               <MapPin size={16} className="footer-icon" />
               {CLINIC_INFO.address}
@@ -86,7 +86,7 @@ export default function Footer({ onOpenBooking, lang = 'en' }) {
 
           {/* Socials Column */}
           <div className="footer-social-col">
-            <h4 className="footer-heading">Digital Connect</h4>
+            <h3 className="footer-heading">Digital Connect</h3>
             <div className="social-links-list">
               <a
                 href="https://instagram.com/smartclinicjo"
@@ -173,7 +173,7 @@ export default function Footer({ onOpenBooking, lang = 'en' }) {
 
         .footer-tagline {
           font-size: 0.875rem;
-          color: var(--text-dark-muted);
+          color: #D4CEC7;
           line-height: 1.7;
           max-width: 340px;
         }
@@ -207,7 +207,7 @@ export default function Footer({ onOpenBooking, lang = 'en' }) {
 
         .footer-links-list button {
           font-size: 0.85rem;
-          color: var(--text-dark-muted);
+          color: #D4CEC7;
           transition: color 0.2s ease;
           text-align: left;
         }
@@ -221,7 +221,7 @@ export default function Footer({ onOpenBooking, lang = 'en' }) {
           align-items: flex-start;
           gap: 0.75rem;
           font-size: 0.85rem;
-          color: var(--text-dark-muted);
+          color: #D4CEC7;
           margin-bottom: 1rem;
           line-height: 1.6;
         }
@@ -248,7 +248,7 @@ export default function Footer({ onOpenBooking, lang = 'en' }) {
         }
 
         .footer-phone a {
-          color: var(--text-dark-muted);
+          color: #D4CEC7;
           transition: color 0.2s ease;
         }
 
@@ -268,7 +268,7 @@ export default function Footer({ onOpenBooking, lang = 'en' }) {
           align-items: center;
           gap: 0.6rem;
           font-size: 0.825rem;
-          color: var(--text-dark-muted);
+          color: #D4CEC7;
           transition: color 0.2s ease;
         }
 

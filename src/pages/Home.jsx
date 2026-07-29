@@ -149,6 +149,8 @@ export default function Home({ onOpenBooking, lang = 'en' }) {
                 <img
                   src={clinic1Img}
                   alt="Smart Clinic Interior in Abdoun"
+                  width="480"
+                  height="320"
                   loading="lazy"
                   decoding="async"
                   className="compact-about-img"

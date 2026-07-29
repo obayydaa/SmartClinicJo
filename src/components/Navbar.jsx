@@ -95,7 +95,7 @@ export default function Navbar({ onOpenBooking, lang = 'en', toggleLang }) {
         <div className="container navbar-container">
           {/* Brand Logo Only (Clicking scrolls to Hero) */}
           <div className="navbar-logo" onClick={() => handleNavClick('home')} title="Return to Top">
-            <img src={logoImg} alt="Smart Clinic Logo" className="logo-img" width="110" height="46" />
+            <img src={logoImg} alt="Smart Clinic Logo" className="logo-img" width="110" height="46" fetchpriority="high" decoding="async" />
           </div>
 
           {/* Desktop Nav */}
